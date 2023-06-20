@@ -16,7 +16,7 @@ public class PageObjetc {
         driver.get(PATH_HTML);
     }
 
-    public void quitPages() {
-        driver.quit(); // Fecha todas as janelas abertas.
-    }
+    // -------------------------------------- ATRIBUTES PAGE --------------------------------------
+
+
 }
