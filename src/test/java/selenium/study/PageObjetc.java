@@ -16,7 +16,4 @@ public class PageObjetc {
         driver.get(PATH_HTML);
     }
 
-    // -------------------------------------- ATRIBUTES PAGE --------------------------------------
-
-
 }

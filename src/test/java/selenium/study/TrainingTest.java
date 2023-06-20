@@ -47,12 +47,12 @@ class TrainingTest {
 
 	@Test
 	void shouldCountAllSelectFieldsSports() {
-		page.countElementsSelected("Futebol", "Corrida", "Karate");
+		Assertions.assertEquals(3, page.countElementsSelected("Futebol", "Corrida", "Karate"));
 	}
 
 	@Test
 	void shouldCountAllSelectBeforeDescelectFieldsSports() {
-		page.countElementsSelectedAfterDeslesectedElements();
+		Assertions.assertEquals(2, page.countElementsSelectedAfterDeslesectedElements());
 	}
 
 	@Test
