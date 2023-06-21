@@ -243,7 +243,22 @@ public class TrainingPage extends PageObjetc {
         driver.findElement(By.id(id)).click();
     }
 
+    public void sendKeys(String id, String text) {
+        driver.findElement(By.id(id)).sendKeys(text);
+    }
+
     public void register() {
         driver.findElement(By.id("elementosForm:cadastrar")).click();
+    }
+
+    public void selectElementsWithXpath() {
+        driver.findElement(By.xpath("//input[@name='elementosForm:nome']")).sendKeys("Abner");
+        driver.findElement(By.xpath("//input[@type='radio' and @value='F']")).click();
+        driver.findElement(By.xpath("//*[@type='checkbox' and @value='pizza']")).click();
+        driver.findElement(By.xpath("//table[@id='elementosForm:tableUsuarios']//tr[1]//input[@type='button']")).click();
+        driver.switchTo().alert().accept();
+        driver.findElement(By.xpath("//table[@id='elementosForm:tableUsuarios']//tr[4]//td[last()]")).click();
+        String analfabeto = driver.findElement(By.xpath("//*[@id='tabelaSemJSF']//*[.='Analfabeto']")).getText();
+        driver.findElement(By.xpath("//table[@id='elementosForm:tableUsuarios']//tr[last()]//input[@type='text']")).sendKeys(analfabeto);
     }
 }

@@ -4,7 +4,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.Duration;
 
 @SpringBootTest
 class TrainingTest {
@@ -14,6 +19,10 @@ class TrainingTest {
 	@BeforeEach
 	public void beforeEach() {
 		page = new TrainingPage();
+//		page.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		/* Espera assincrona deve ser colocada em BeforeEach, pois caso algum teste tenha algum tipo de demora
+		* de resposta, ele irá aguardar o tempo prédeefinido. Caso a resposta venha antes do tempo determinado
+		* ele da continuidade sem a necessidade de aguardar o tempo total, pois ele fica observando */
 	}
 
 	@AfterEach
@@ -196,5 +205,38 @@ class TrainingTest {
 		page.register();
 		Assertions.assertEquals("Voce faz esporte ou nao?", page.getTextAlert());
 		page.acceptAlert();
+	}
+
+	@Test
+	void testSelectXpath() {
+		page.selectElementsWithXpath();
+	}
+
+	@Test
+	void fixedWait() throws InterruptedException {
+		page.clickElement("buttonDelay");
+		Thread.sleep(4000);
+		page.sendKeys("novoCampo", "Deu Certo!");
+		// Espera Assync com tempo fixo.
+	}
+
+	@Test
+	void implicitWait() {
+		page.clickElement("buttonDelay");
+		page.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		page.sendKeys("novoCampo", "Deu Certo!");
+		// Espera Assync com tempo fixo.
+	}
+
+	@Test
+	void explicitWait() {
+		page.clickElement("buttonDelay");
+
+		WebDriverWait wait = new WebDriverWait(page.driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("novoCampo")));
+		// Aguarda apenas o elemento definido na condição. (ExpectedConditions: possui diversos outros métodos para diversas necessidades).
+
+		page.sendKeys("novoCampo", "Deu Certo!");
+		// Espera Assync com tempo fixo.
 	}
 }
